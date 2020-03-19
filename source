@@ -1,9 +1,114 @@
+
 #include <iostream>
 using namespace std;
+void PrintFoward();
+void PrintBackward();
+void InsertNode();
+void DeleteNode();
+
+struct node
+{
+	int value;
+	node * next;
+};
+void PrintFoward(node * temp)
+{
+	/*while (temp != NULL)        //Non-Recursion
+	{
+		cout << temp->value << endl;
+		temp = temp->next;
+	}
+	*/
+
+	if (temp != NULL) //Using Recursion
+
+	{
+		cout << temp->value << endl;
+		PrintFoward(temp -> next);
+	}
+}
+void PrintBackward(node * temp)
+{
+	if (temp != NULL) // Using Recursion
+	{
+		PrintBackward(temp->next);
+		cout << temp->value << endl;
+	}
+}
+void InsertNode(node *temp, int n )
+{
+//Instering a new node toa liked list
+	node *insert = new node;
+	insert->value = 420;
+
+	for (int i = 0; i < n-2; i++)
+	{ 
+		temp = temp->next;
+	}
+	insert->next = temp->next; // Key operations to 
+	temp->next = insert;       //add a node to a linked list
+}
+void DeleteNode(node *temp, int n)
+{
+//Deleting a node from liked list
+	node * remove;
+	for (int i = 0; i < n-2; i++)
+	{
+		temp = temp->next;
+	}
+	remove = temp->next;  // Key operations to 
+	temp->next = remove->next;//delete a node 
+	delete remove;            //from' a linked list
+}
 
 int main()
 {
+	node *head, *temp;
 
+	head = new node;
+	head->value = rand();
 
-return 0;
+	temp = head;
+
+	for (int i = 0; i < 4; i++)
+	{
+		temp->next = new node;
+
+		temp = temp->next;
+		temp->value = rand();
+	}
+	temp->next = NULL;
+	
+	cout << "Foward: " << endl;
+	PrintFoward(head);
+	cout << endl;
+
+	cout << "Backward: " << endl;
+	PrintBackward(head);
+	cout << endl;
+
+	cout << "Add Node:";
+InsertNode(head, 4);
+cout << endl;
+PrintFoward(head);
+cout << endl;
+
+cout << "Delete Node:";
+DeleteNode(head,5);
+cout << endl;
+PrintFoward(head);
+cout << endl;
+
+	temp = head;
+
+	while (temp != NULL)
+	{
+		temp = temp->next;
+		delete head;
+		head = temp;
+
+	}
+
+	system("pause");
+	return 0;
 }
